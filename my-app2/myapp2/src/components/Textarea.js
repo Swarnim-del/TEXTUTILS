@@ -1,4 +1,4 @@
-import React ,{useState} from "react";
+import React ,{useState} from 'react';
 // useState is a awesome hook
 import PropTypes from 'prop-types'
 
@@ -45,13 +45,14 @@ export default function Textarea(props) {
     setText(newText)
   }
   const copy=()=>{
-  
-    let newText=text
-    setText(newText)
+    var text=document.getElementById("mytext"); 
+    text.select();
+    navigator.clipboard.writeText(text.value);
+    props.showAlert("success","Copied to Clipboard")
   }
   const normal=()=>{
-    let newText=text
-    setText(newText)
+    let newText=text.split(/[ ]+/);
+    setText(newText.join(" "))
   }
   
 
@@ -78,19 +79,22 @@ export default function Textarea(props) {
                     <div className="btn btn-success col" onClick={underline}> Underline</div>
                     </div>
                     <div className="row">
-                    <div className="btn btn-danger col" onClick={clear}>Clear output</div>
-                    <div className="btn btn-info col" onClick={copy}>Copy to Clipboard</div>
+
+                    <div className="btn btn-info col" onClick={clear}>Clear output</div>
+                    <div className="btn btn-info col" onClick={clear}>Uniform text</div>
+                    <div className="btn btn-info col"  onClick={copy}>Copy to Clipboard</div>
                     </div>
                 </div>        
       </div>
 
       <div id="preview" className="container">
         <span><h1>Preview</h1></span>
-          <p>{text}</p>
+          <p>{text.length>0?text:"Enter something in the textbox above to preview it here"}</p>
       </div>
 
       <div id="textsummary" className="container ">
           <span ><h1>Your Text Summary</h1></span>
+          {/* <p>No of words : {text.split(" ").length}</p> */}
           <p>No of words : {text.split(" ").length}</p>
           <p>No of Charachters: {text.length}</p>
           <p> {text.split(" ").length * 0.008} Minutes read</p>
